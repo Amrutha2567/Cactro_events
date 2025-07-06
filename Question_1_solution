@@ -1,1 +1,43 @@
+What was the #1 challenge for you while doing this task? Please share a rough time breakdown for different parts of the task as well. Make sure you cover ALL the questions here.
 
+
+Implementation
+
+Object.defineProperty(Array.prototype, 'groupBy', {
+  value: function (keySelector) {
+    
+    if (!this || this.length === 0) return {};
+
+    
+    return this.reduce((groupedResult, currentItem) => {
+      
+      const key = currentItem == null ? 'null' : keySelector(currentItem);
+
+      
+      if (!groupedResult[key]) {
+        groupedResult[key] = [];
+      }
+
+      
+      groupedResult[key].push(currentItem);
+
+      return groupedResult;
+    }, {});
+  },
+  enumerable: false 
+});
+
+
+
+
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+const groupsByEvenOdd = numbers.groupBy(x => x % 2 === 0 ? 'Even' : 'Odd');
+console.log(groupsByEvenOdd);
+
+const groupsByFirstDigit = numbers.groupBy(x => String(x)[0]);
+console.log(groupsByFirstDigit);
+
+const mixed = [null, undefined, 1, 2, null];
+const groupsMixed = mixed.groupBy(x => typeof x);
+console.log(groupsMixed);
